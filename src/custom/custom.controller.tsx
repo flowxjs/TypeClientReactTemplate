@@ -47,6 +47,8 @@ export class CustomController {
         <li><span className="cur" onClick={() => ctx.redirect('/stage/6')}>错误捕获</span></li>
         <li><span className="cur" onClick={() => ctx.redirect('/stage/7')}>使用路由生命周期</span></li>
       </ul>
+      <h2>Repository</h2>
+      <a href="https://github.com/flowxjs/TypeClient" target="_blank" rel="noopener noreferrer">View on github.</a>
     </div>
   }
 
@@ -61,7 +63,7 @@ export class CustomController {
     const { count } = useContextState(() => ({ count: ctx.state.count }));
     const click = useCallback(() => {
       ctx.state.count = Number(this.CustomService.getdefaultCount());
-    }, []);
+    }, [ctx.state.count]);
     return <p>
       {count} <button onClick={click}>点击修改</button>
     </p>
@@ -73,8 +75,8 @@ export class CustomController {
   stage3(ctx: Context<TCustomRouteData>) {
     const { count } = useContextState(() => ({ count: ctx.state.count }));
     return <p>
-      {count} 
-      <div>等待3秒后看到结果</div>
+      {count} - 
+      <span>等待3秒后看到结果</span>
     </p>
   }
 
@@ -83,10 +85,10 @@ export class CustomController {
   @useMiddleware(CustomMiddleware)
   stage4(ctx: Context<TCustomRouteData>) {
     const Cmp = useContextComponent<TCustomRouteData, CustomService>(this.CustomService, 'cumstomComponent')
-    return <p>
+    return <div>
       以下是一个缓存是组件，同时3秒后看到中间件对其更改。
       <Cmp {...ctx.state} />
-    </p>
+    </div>
   }
 
   @Route('/stage/5')
