@@ -1,5 +1,5 @@
 import './index.css';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { bootstrp, usePopStateHistoryMode } from '@typeclient/core';
 import { ReactApplication } from '@typeclient/react';
 import { CustomController } from './custom/custom.controller';
@@ -17,8 +17,21 @@ export const Slot = app.createSlotter();
 
 app.setController(CustomController);
 
-app.on('Application.onError', (err, ctx) => <p>Error: {err.message}</p>);
-app.on('Application.onNotFound', (req) => <p>Not Found: {req.pathname}</p>);
+app.onError((err, ctx) => {
+  return <Fragment>
+    <h1>TypeClient Catch Error:</h1>
+    <p>Path: {ctx.req.pathname}</p>
+    <p><strong>Message</strong></p>
+    <pre>{err.stack}</pre>
+  </Fragment>
+});
+
+app.onNotFound(req => {
+  return <Fragment>
+    <h1>Sorry, Page not found:</h1>
+    <p>Path: {req.pathname}</p>
+  </Fragment>
+});
 
 bootstrp();
 
