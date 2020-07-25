@@ -1,19 +1,21 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, Fragment } from 'react';
 import { Controller, Route, Context, State, useMiddleware, useException } from "@typeclient/core";
 import { TCustomRouteData, CustomRouteData } from "./custom.interface";
-import { Template, useContextState, useContextComponent, useContextEffect } from '@typeclient/react';
+import { Template, useContextState, useContextEffect } from '@typeclient/react';
 import { CustomTemplate } from './custom.template';
 import { CustomMiddleware, CustomMiddleware2 } from './custom.middleware';
 import { CustomError } from './custom.error';
 import { inject } from 'inversify';
 import { CustomService } from './custom.service';
 import { ErrorCatcher } from './custom.exception';
+import { CustomComponent } from './custom.component';
 
 @Controller()
 @Template(CustomTemplate)
 @useException(CustomError)
 export class CustomController {
   @inject(CustomService) private readonly CustomService: CustomService;
+  @inject(CustomComponent) private readonly CustomComponent: CustomComponent;
 
   @Route()
   IndexPage(ctx: Context) {
@@ -46,6 +48,7 @@ export class CustomController {
         <li><span className="cur" onClick={() => ctx.redirect('/stage/5')}>查看页面状态</span></li>
         <li><span className="cur" onClick={() => ctx.redirect('/stage/6')}>错误捕获</span></li>
         <li><span className="cur" onClick={() => ctx.redirect('/stage/7')}>使用路由生命周期</span></li>
+        <li><span className="cur" onClick={() => ctx.redirect('/stage/8#hash-anchor')}>Hash Anchor 锚点功能</span></li>
       </ul>
       <h2>Repository</h2>
       <a href="https://github.com/flowxjs/TypeClient" target="_blank" rel="noopener noreferrer">View on github.</a>
@@ -84,10 +87,10 @@ export class CustomController {
   @State(CustomRouteData)
   @useMiddleware(CustomMiddleware)
   stage4(ctx: Context<TCustomRouteData>) {
-    const Cmp = useContextComponent<TCustomRouteData, CustomService>(this.CustomService, 'cumstomComponent')
+    const Cmp = this.CustomComponent.render;
     return <div>
       以下是一个缓存是组件，同时3秒后看到中间件对其更改。
-      <Cmp {...ctx.state} />
+      <Cmp text="hello world" />
     </div>
   }
 
@@ -118,5 +121,15 @@ export class CustomController {
       return () => console.log('/stage/7 路由生命周期 unmount')
     })
     return <p>当前数据：{count}，需要等3秒后看到错误捕获的变化，请同时打开console看控制台</p>
+  }
+
+  @Route('/stage/8')
+  stage8() {
+    return <Fragment>
+      <p>这是一个普通页面</p>
+      <div style={{ width: '100%', height: '10000px' }}></div>
+      <div id="hash-anchor" style={{ width: '100%', height: '30px', lineHeight: '30px', color: 'red' }}>Hash Anchor Area! [id="hash-anchor"]</div>
+      <div style={{ width: '100%', height: '10000px' }}>2. Block area!</div>
+    </Fragment>
   }
 }
