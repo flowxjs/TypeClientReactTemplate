@@ -1,6 +1,4 @@
 import { injectable } from 'inversify';
-import React from 'react';
-import { TCustomRouteData } from './custom.interface';
 
 @injectable()
 export class CustomService {
