@@ -17,10 +17,10 @@ export const Slot = app.createSlotter();
 
 app.setController(CustomController);
 
-app.onError((err, ctx) => {
+app.onError((err, ctx?) => {
   return <Fragment>
     <h1>TypeClient Catch Error:</h1>
-    <p>Path: {ctx.req.pathname}</p>
+    { ctx ? <p>Path: {ctx.req.pathname}</p> : null }
     <p><strong>Message</strong></p>
     <pre>{err.stack}</pre>
   </Fragment>

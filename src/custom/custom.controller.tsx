@@ -1,7 +1,7 @@
 import React, { useCallback, Fragment } from 'react';
 import { Controller, Route, Context, State, useMiddleware, useException } from "@typeclient/core";
 import { TCustomRouteData, CustomRouteData } from "./custom.interface";
-import { Template, useContextState, useContextEffect } from '@typeclient/react';
+import { Template, useContextState, useContextEffect, useComponent } from '@typeclient/react';
 import { CustomTemplate } from './custom.template';
 import { CustomMiddleware, CustomMiddleware2 } from './custom.middleware';
 import { CustomError } from './custom.error';
@@ -87,7 +87,7 @@ export class CustomController {
   @State(CustomRouteData)
   @useMiddleware(CustomMiddleware)
   stage4(ctx: Context<TCustomRouteData>) {
-    const Cmp = this.CustomComponent.render;
+    const Cmp = useComponent(this.CustomComponent);
     return <div>
       以下是一个缓存是组件，同时3秒后看到中间件对其更改。
       <Cmp text="hello world" />

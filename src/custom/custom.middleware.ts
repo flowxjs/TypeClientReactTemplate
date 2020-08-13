@@ -1,8 +1,7 @@
-import { MiddlewareTransform, ComposeNextCallback, Context } from "@typeclient/core";
+import { MiddlewareTransform, ComposeNextCallback, Context, Middleware } from "@typeclient/core";
 import { TCustomRouteData } from "./custom.interface";
-import { injectable } from 'inversify';
 
-@injectable()
+@Middleware()
 export class CustomMiddleware<T extends Context<TCustomRouteData>> implements MiddlewareTransform<T> {
   async use(ctx: T, next: ComposeNextCallback) {
     await new Promise((resolve, reject) => {
@@ -20,7 +19,7 @@ export class CustomMiddleware<T extends Context<TCustomRouteData>> implements Mi
   }
 }
 
-@injectable()
+@Middleware()
 export class CustomMiddleware2<T extends Context<TCustomRouteData>> implements MiddlewareTransform<T> {
   async use(ctx: T, next: ComposeNextCallback) {
     await new Promise((resolve, reject) => {

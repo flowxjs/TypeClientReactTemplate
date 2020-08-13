@@ -1,9 +1,8 @@
-import { injectable } from 'inversify';
-import { Context, ExceptionTransfrom } from '@typeclient/core';
+import { Context, ExceptionTransfrom, Exception } from '@typeclient/core';
 import { TCustomRouteData } from './custom.interface';
 import React from 'react';
 
-@injectable()
+@Exception()
 export class CustomError<T extends Context<TCustomRouteData>> implements ExceptionTransfrom<T> {
   catch(e: Error) {
     return <>
