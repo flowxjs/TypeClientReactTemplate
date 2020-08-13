@@ -28,17 +28,8 @@ export class CustomController {
         <li>支持中间件模型</li>
         <li>支持路由生命周期</li>
         <li>通过事件分发快速构建不同渲染架构的驱动</li>
-        <li>轻量的体积</li>
+        <li>轻量的体积 gzip &lt; 30KB</li>
       </ol>
-      <h2>Why？</h2>
-      <p>前端路由一般性能不是瓶颈，但是在一些渲染架构上，比如React上，在量级非常大的组件下，DIFF就显得非常笨拙。</p>
-      <p>当匹配到的路由正巧命中最后一个，这时候路由组件diff了正好10000个，相当于循环中需要匹配10000次，在不断更新的vDom上，它的性能是非常差的。</p>
-      <p>当然有人会问实际业务场景中不可能存在如此之多的路由。是的，这确实不可能存在，但是对于性能的压榨前提下，我们需要更高性能的路由匹配模式。而TypeClient正好采用了高性能的字符串索引算法 <a href="https://en.wikipedia.org/wiki/Radix_tree" target="_blank" rel="noopener noreferrer">Radix Tree</a> 来解决这个问题。</p>
-      <h2>Stage</h2>
-      <p>其实它的确切适应场景实在复杂的后台系统中。TypeClient将路由与过程解偶，通过Context、Middleware以及LifeCycle等概念将开发流程切分开来，让开发者可以非常自由地将逻辑嵌入到所需要的过程中，而不是冗余地堆砌在一起。</p>
-      <p>如果您熟悉express或者koa的nodejs的服务开发，那么您将非常快速地上手这个架构，您也会在使用架构的过程中享受到服务端开发模式带来的乐趣。</p>
-      <p>其实TypeClient的流程化思想来源于后端，正如nestjs的思想来源于Angular一样。</p>
-      <p>对于轻量级应用，您也是可以使用的，它基本涵盖所有路由使用场景。对于路由非强依赖的项目，它的优势仅突出在过程解偶上。所以，使用此架构请先确定项目是否真的需要用到它。</p>
       <h2>Example</h2>
       <ul>
         <li><span className="cur" onClick={() => ctx.redirect('/stage/1')}>普通跳转页面</span></li>
