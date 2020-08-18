@@ -41,3 +41,11 @@ export class CustomMiddleware2<T extends Context<TCustomRouteData>> implements M
     await next();
   }
 }
+
+@Middleware()
+export class CustomRedirection<T extends Context<TCustomRouteData>> implements MiddlewareTransform<T> {
+  async use(ctx: T) {
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    ctx.redirect('/stage/1');
+  }
+}
