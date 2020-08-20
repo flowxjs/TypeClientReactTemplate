@@ -41,6 +41,7 @@ export class CustomController {
         <li><span className="cur" onClick={() => ctx.redirect('/stage/7')}>使用路由生命周期</span></li>
         <li><span className="cur" onClick={() => ctx.redirect('/stage/8#hash-anchor')}>Hash Anchor 锚点功能</span></li>
         <li><span className="cur" onClick={() => ctx.redirect('/stage/9')}>中间件redirection</span></li>
+        <li><span className="cur" onClick={() => ctx.redirect('/stage/10?a=1')}>变化query与params</span></li>
       </ul>
       <h2>Repository</h2>
       <a href="https://github.com/flowxjs/TypeClient" target="_blank" rel="noopener noreferrer">View on github.</a>
@@ -130,5 +131,18 @@ export class CustomController {
   @useMiddleware(CustomRedirection)
   stage9() {
     return <p>这是一个普通页面9</p>
+  }
+
+  @Route('/stage/:id(\\d+)')
+  stage(ctx: Context) {
+    return <div>
+      <p>params.id: {ctx.params.id}</p>
+      <p>query.a: {ctx.query.a}</p>
+      <button onClick={() => {
+        const id = Number(ctx.params.id) + 1;
+        const a = Number(ctx.query.a) + 1;
+        ctx.redirect('/stage/' + id + '?a=' + a)
+      }}>go+1</button>
+    </div>
   }
 }
