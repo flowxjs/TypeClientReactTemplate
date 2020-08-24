@@ -1,9 +1,16 @@
 import React from 'react';
-import { Slot } from '..';
 import './custom.style.css';
-export function CustomTemplate(props: React.PropsWithoutRef<{}>) {
+import { Context } from '@typeclient/core';
+import { useSlot, ReactApplication } from '@typeclient/react';
+export function CustomTemplate(props: React.PropsWithChildren<Context>) {
+  const { Consumer } = useSlot(props.app as ReactApplication);
   return <div className="app">
     <h1 className="title">TypeClient Router Manager</h1>
-    <Slot {...props} />
+    <p style={{ textAlign: 'center' }}>
+      <Consumer name="foo">
+        这里是插槽，默认文字。
+      </Consumer>
+    </p>
+    {props.children}
   </div>
 }

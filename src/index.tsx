@@ -13,8 +13,6 @@ const app = new ReactApplication({
   prefix: '/'
 });
 
-export const Slot = app.createSlotter();
-
 app.setController(CustomController);
 
 app.onError((err, ctx?) => {

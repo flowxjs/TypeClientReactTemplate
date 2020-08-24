@@ -1,7 +1,7 @@
 import React, { useCallback, Fragment } from 'react';
 import { Controller, Route, Context, State, useMiddleware, useException } from "@typeclient/core";
 import { TCustomRouteData, CustomRouteData } from "./custom.interface";
-import { Template, useContextState, useContextEffect, useComponent } from '@typeclient/react';
+import { Template, useContextState, useContextEffect, useComponent, useSlot, ReactApplication } from '@typeclient/react';
 import { CustomTemplate } from './custom.template';
 import { CustomMiddleware, CustomMiddleware2, CustomRedirection } from './custom.middleware';
 import { CustomError } from './custom.error';
@@ -42,6 +42,7 @@ export class CustomController {
         <li><span className="cur" onClick={() => ctx.redirect('/stage/8#hash-anchor')}>Hash Anchor 锚点功能</span></li>
         <li><span className="cur" onClick={() => ctx.redirect('/stage/9')}>中间件redirection</span></li>
         <li><span className="cur" onClick={() => ctx.redirect('/stage/10?a=1')}>变化query与params</span></li>
+        <li><span className="cur" onClick={() => ctx.redirect('/stage/slot')}>插槽变化</span></li>
       </ul>
       <h2>Repository</h2>
       <a href="https://github.com/flowxjs/TypeClient" target="_blank" rel="noopener noreferrer">View on github.</a>
@@ -143,6 +144,14 @@ export class CustomController {
         const a = Number(ctx.query.a) + 1;
         ctx.redirect('/stage/' + id + '?a=' + a)
       }}>go+1</button>
+    </div>
+  }
+
+  @Route('/stage/slot')
+  Slot(ctx: Context) {
+    const { Provider } = useSlot(ctx.app as ReactApplication);
+    return <div>请看插槽位置
+      <Provider name="foo">插槽内容已变化</Provider>
     </div>
   }
 }
