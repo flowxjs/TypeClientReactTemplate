@@ -1,5 +1,5 @@
 import React, { useCallback, Fragment } from 'react';
-import { Controller, Route, Context, State, useMiddleware, useException } from "@typeclient/core";
+import { Controller, Route, Context, State, useMiddleware, useException, Redirect } from "@typeclient/core";
 import { TCustomRouteData, CustomRouteData } from "./custom.interface";
 import { Template, useContextState, useContextEffect, useComponent, useSlot, ReactApplication } from '@typeclient/react';
 import { CustomTemplate } from './custom.template';
@@ -43,6 +43,7 @@ export class CustomController {
         <li><span className="cur" onClick={() => ctx.redirect('/stage/9')}>中间件redirection</span></li>
         <li><span className="cur" onClick={() => ctx.redirect('/stage/10?a=1')}>变化query与params</span></li>
         <li><span className="cur" onClick={() => ctx.redirect('/stage/slot')}>插槽变化</span></li>
+        <li><span className="cur" onClick={() => ctx.redirect('/stage/redirect')}>注解跳转</span></li>
       </ul>
       <h2>Repository</h2>
       <a href="https://github.com/flowxjs/TypeClient" target="_blank" rel="noopener noreferrer">View on github.</a>
@@ -154,4 +155,13 @@ export class CustomController {
       <Provider name="foo">插槽内容已变化</Provider>
     </div>
   }
+
+  @Route('/stage/redirect/text')
+  RedirectText() {
+    return <div>这是跳转后的文本</div>
+  }
+
+  @Route('/stage/redirect')
+  @Redirect('/stage/redirect/text')
+  RedirectCommand() {}
 }
