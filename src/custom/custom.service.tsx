@@ -1,6 +1,6 @@
-import { injectable } from 'inversify';
+import { Service } from '@typeclient/core';
 
-@injectable()
+@Service()
 export class CustomService {
   getdefaultCount() {
     return (Math.random() * 10000).toFixed(2);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component, ComponentTransform } from '@typeclient/react';
-import { inject } from 'inversify';
 import { CustomService } from './custom.service';
+import { inject } from '@typeclient/core';
 
 @Component()
 export class CustomComponent implements ComponentTransform {

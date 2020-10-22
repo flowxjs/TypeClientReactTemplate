@@ -1,11 +1,10 @@
 import React, { useCallback, Fragment } from 'react';
-import { Controller, Route, Context, State, useMiddleware, useException, Redirect } from "@typeclient/core";
+import { Controller, Route, Context, State, useMiddleware, useException, Redirect, inject } from "@typeclient/core";
 import { TCustomRouteData, CustomRouteData } from "./custom.interface";
 import { Template, useContextState, useContextEffect, useComponent, useSlot, ReactApplication } from '@typeclient/react';
 import { CustomTemplate } from './custom.template';
 import { CustomMiddleware, CustomMiddleware2, CustomRedirection } from './custom.middleware';
 import { CustomError } from './custom.error';
-import { inject } from 'inversify';
 import { CustomService } from './custom.service';
 import { ErrorCatcher } from './custom.exception';
 import { CustomComponent } from './custom.component';
